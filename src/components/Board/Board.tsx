@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import "./Board.css";
+import { BoardWrapper } from "./Board.styles";
+
+const createArray = (size: number) => {
+  const array = [];
+  for (let i = 0; i < size * size; i++) {
+    array.push("");
+  }
+  return array;
+};
 
 function Board() {
-  const createArray = (size: number) => {
-    const array = [];
-    for (let i = 0; i < size; i++) {
-      array.push("");
-    }
-    return array;
-  };
-
-  const [boards, setBoards] = useState<string[]>(createArray(9));
+  const [size, setSize] = useState(5);
+  const [boards, setBoards] = useState<string[]>(createArray(size));
   const [isX, setIsX] = useState<boolean>(true);
 
   const handleBoardClick = (index: number) => {
@@ -27,8 +28,8 @@ function Board() {
   };
 
   return (
-    <div className="container">
-      <div className="grid">
+    <BoardWrapper side={100} size={size}>
+      <div className="board">
         {boards.map((board, index) => {
           console.log(index);
           return (
@@ -38,13 +39,16 @@ function Board() {
               }}
               className="cell"
               key={index}
+              style={
+                board === "X" ? { color: "#30c3be" } : { color: "#f2b237" }
+              }
             >
               {board}
             </div>
           );
         })}
       </div>
-    </div>
+    </BoardWrapper>
   );
 }
 
