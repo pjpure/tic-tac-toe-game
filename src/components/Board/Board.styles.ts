@@ -43,13 +43,14 @@ export const Wrapper = styled.div<Props>`
   border-radius: 5px;
   padding:10px ;
   height: 30px;
+  cursor: pointer;
   }
 
   .board {
   margin-top:20px ;
   display: grid;
   grid-template-columns: repeat(${props => props.size}, 1fr);
-  grid-gap: 20px;
+  grid-gap: ${props => 20 * 4 / props.size}px;
   color: aliceblue;
 }
 
@@ -64,6 +65,10 @@ export const Wrapper = styled.div<Props>`
   font-weight: 700;
   aspect-ratio: 1;
   cursor: pointer;
+}
+
+.cell:hover{
+  background-color: #304955;
 }
 
 `;
