@@ -1,7 +1,6 @@
 .join-game {
   color: #a8bec9;
   text-align: center;
-  margin-bottom: 25%;
 }
 
 .join-game input {
@@ -18,17 +17,8 @@
   font-size: 12pt;
 }
 
-.join-game-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  column-gap: 20px;
-  width: 100%;
-}
-
-.join-game-btn button {
-  width: 120px;
+.join-game button {
+  width: 320px;
   height: 30px;
   color: #192a32;
   cursor: pointer;
@@ -37,6 +27,6 @@
   border: 1px solid #a8bec9;
 }
 
-.join-game-btn button:hover {
+.join-game button:hover {
   background-color: #a8bec9;
 }

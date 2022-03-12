@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import SocketService from "../../services/SocketService";
 import "./JoinGame.css";
-
+import BackButton from "../../components/BackButton/BackButton";
 function JoinGame() {
   const [roomId, setRoomId] = useState("");
   const navigate = useNavigate();
@@ -12,12 +12,19 @@ function JoinGame() {
   };
 
   const handleJoinGame = () => {
+    const socket = SocketService();
+    socket.emit("room:create", roomId);
     navigate(`/play`);
+  };
+
+  const handleBackClick = () => {
+    navigate("/");
   };
 
   return (
     <div className="join-game">
-      <h2>Enter Room ID to Join the Game</h2>
+      <BackButton handleBackClick={handleBackClick} />
+      <h1>Enter Room ID to Join the Game</h1>
       <input
         type="text"
         placeholder="Enter Room ID"
@@ -26,7 +33,6 @@ function JoinGame() {
       />
       <div className="join-game-btn">
         <button onClick={handleJoinGame}>Join</button>
-        <button>Cancel</button>
       </div>
     </div>
   );

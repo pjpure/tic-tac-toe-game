@@ -1,0 +1,39 @@
+.home {
+  text-align: center;
+  color: #a8bec9;
+  padding: 0;
+}
+
+.home h1 {
+  font-size: 50px;
+  margin: 10px 10px;
+}
+
+.home input {
+  text-align: center;
+  width: 220px;
+  height: 30px;
+  background-color: #d9e0e4;
+  border: 1px solid #a8bec9;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 20px;
+  outline: none;
+  color: #192a32;
+  font-size: 14pt;
+}
+
+.home button {
+  width: 230px;
+  height: 35px;
+  color: #192a32;
+  cursor: pointer;
+  background-color: #a8bec9;
+  border-radius: 3px;
+  border: 1px solid #a8bec9;
+  margin-bottom: 20px;
+}
+
+.home button:hover {
+  background-color: #d9e0e4;
+}

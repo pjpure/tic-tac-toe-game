@@ -1,0 +1,7 @@
+.back {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  color: #a8bec9;
+  cursor: pointer;
+}
