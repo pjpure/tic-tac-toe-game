@@ -1,0 +1,42 @@
+.join-game {
+  color: #a8bec9;
+  text-align: center;
+  margin-bottom: 25%;
+}
+
+.join-game input {
+  text-align: center;
+  width: 320px;
+  height: 20px;
+  background-color: #d9e0e4;
+  border: 1px solid #a8bec9;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 20px;
+  outline: none;
+  color: #192a32;
+  font-size: 12pt;
+}
+
+.join-game-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  column-gap: 20px;
+  width: 100%;
+}
+
+.join-game-btn button {
+  width: 120px;
+  height: 30px;
+  color: #192a32;
+  cursor: pointer;
+  background-color: #d9e0e4;
+  border-radius: 3px;
+  border: 1px solid #a8bec9;
+}
+
+.join-game-btn button:hover {
+  background-color: #a8bec9;
+}
