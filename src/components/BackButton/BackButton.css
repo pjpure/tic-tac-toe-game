@@ -4,4 +4,5 @@
   left: 10px;
   color: #a8bec9;
   cursor: pointer;
+  z-index: 10;
 }

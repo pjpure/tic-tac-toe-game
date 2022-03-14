@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 interface Props {
   size: number
+  isTurn: boolean
 }
 
 export const Wrapper = styled.div<Props>`
@@ -64,11 +65,17 @@ export const Wrapper = styled.div<Props>`
   font-size: 50px;
   font-weight: 700;
   aspect-ratio: 1;
-  cursor: pointer;
+  cursor: ${props => props.isTurn ? 'pointer' : 'default'};
 }
 
 .cell:hover{
-  background-color: #304955;
+  background-color: ${props => props.isTurn ? '#304955' : '#1f3540'};
+}
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  color: #a8bec9;
 }
 
 `;
