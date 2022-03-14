@@ -31,6 +31,10 @@ function Home() {
     navigate("/join");
   };
 
+  const handleCreateGame = () => {
+    navigate("/create");
+  };
+
   const handleBackClick = () => {
     dispatch(setPlayer(null));
   };
@@ -53,7 +57,7 @@ function Home() {
         <div>
           <BackButton handleBackClick={handleBackClick} />
           <div>
-            <button>Create Room</button>
+            <button onClick={handleCreateGame}>Create Room</button>
           </div>
           <div>
             <button onClick={handleJoinGame}>Join Room</button>

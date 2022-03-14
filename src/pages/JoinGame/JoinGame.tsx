@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SocketService from "../../services/SocketService";
+import socket from "../../services/SocketService";
 import "./JoinGame.css";
 import BackButton from "../../components/BackButton/BackButton";
+import { useAppSelector, useAppDispatch } from "../../hooks/useRedux";
+import { setRoom } from "../../store/slices/RoomSlice";
 function JoinGame() {
   const [roomId, setRoomId] = useState("");
   const navigate = useNavigate();
+  const player = useAppSelector((state) => state.player);
+  const dispatch = useAppDispatch();
 
   const handleRoomIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRoomId(event.target.value);
   };
 
   const handleJoinGame = () => {
-    const socket = SocketService();
-    socket.emit("room:create", roomId);
+    socket.emit("room:join", { playerName: player.name, roomId });
+    dispatch(setRoom(roomId));
     navigate(`/play`);
   };
 

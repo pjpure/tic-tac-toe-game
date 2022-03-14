@@ -42,7 +42,6 @@ function Board() {
       </div>
       <div className="board">
         {boards.map((board, index) => {
-          console.log(index);
           return (
             <div
               onClick={() => {
