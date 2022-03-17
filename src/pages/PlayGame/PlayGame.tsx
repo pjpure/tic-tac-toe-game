@@ -15,21 +15,26 @@ function PlayGame() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [board, setBoard] = useState<string[]>([]);
+  const [board, setBoard] = useState<string[]>(room.board);
   const [isTurn, setIsTurn] = useState(false);
-  const [isStart, setIsStart] = useState(false);
-  const [symbol, setSymbol] = useState("X");
+  const [isPlay, setIsPlay] = useState(room.isPlay);
+  const [symbol, setSymbol] = useState("");
 
   useEffect(() => {
-    socket.on("game:start", ({ player, board }) => {
-      setBoard(board);
-      setIsStart(true);
-      setIsTurn(player.isTurn);
-      setSymbol(player.symbol);
+    socket.on("game:start", (room) => {
+      let myData = room.players.find((p: any) => p.id === socket.id);
+      setBoard(room.board);
+      setIsPlay(true);
+      setIsTurn(myData.isTurn);
+      setSymbol(myData.symbol);
     });
     socket.on("game:updated", ({ board, player }) => {
       setBoard(board);
+      setIsPlay(true);
       setIsTurn(player.isTurn);
+    });
+    socket.on("game:end", () => {
+      setIsPlay(false);
     });
   }, []);
 
@@ -41,6 +46,7 @@ function PlayGame() {
 
   const handleBoardClick = (idx: number) => {
     if (board[idx] === "" && isTurn) {
+      setIsTurn(false);
       socket.emit("game:update", { roomId: room.id, idx });
     }
   };
@@ -53,7 +59,7 @@ function PlayGame() {
 
   return (
     <div className="play-game">
-      {!isStart && <WaitPlayer roomId={room.id} />}
+      {!isPlay && <WaitPlayer roomId={room.id} />}
       <BackButton handleBackClick={handleBackClick} />
       <Wrapper size={Math.sqrt(board.length)} isTurn={isTurn}>
         <div className="header">
@@ -90,9 +96,26 @@ function PlayGame() {
           })}
         </div>
         <div className="footer">
-          <div className="">You</div>
-          <div className="">{room.id}</div>
-          <div className="">3</div>
+          <div>
+            <span>You: </span>
+            <span
+              style={
+                symbol === "X" ? { color: "#30c3be" } : { color: "#f2b237" }
+              }
+            >
+              {symbol}
+            </span>
+          </div>
+          <div>
+            <span>Yuo: </span>
+            <span
+              style={
+                symbol === "X" ? { color: "#f2b237" } : { color: "#30c3be" }
+              }
+            >
+              {symbol === "X" ? "O" : "X"}
+            </span>
+          </div>
         </div>
       </Wrapper>
     </div>

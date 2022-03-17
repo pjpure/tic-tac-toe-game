@@ -19,8 +19,8 @@ function JoinGame() {
 
   const handleJoinGame = () => {
     socket.emit("room:join", { playerName: player.name, roomId });
-    socket.on("room:joined", (roomId) => {
-      dispatch(setRoom({ id: roomId }));
+    socket.on("room:joined", (roomId, room) => {
+      dispatch(setRoom({ ...room, id: roomId }));
       navigate(`/game`);
     });
     socket.on("room:notFound", () => {

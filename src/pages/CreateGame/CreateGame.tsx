@@ -18,8 +18,8 @@ function CreateGame() {
 
   const handleCreateGame = () => {
     socket.emit("room:create", player.name, boardSize);
-    socket.on("room:created", (roomId: string) => {
-      dispatch(setRoom({ id: roomId }));
+    socket.on("room:created", (roomId, room) => {
+      dispatch(setRoom({ ...room, id: roomId }));
       navigate("/game");
     });
   };

@@ -1,12 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface Player {
+    id: string;
+    roomId: string;
+    name: string;
+    symbol: string;
+    isTurn: boolean;
+}
 
 type Room = {
     id: string | null;
+    board: string[];
+    players: Player[];
+    isPlay: boolean;
 }
 
 const initialState: Room = {
     id: null,
+    isPlay: false,
+    board: [],
+    players: [],
 }
 
 const playerSlice = createSlice({

@@ -52,7 +52,6 @@ export const Wrapper = styled.div<Props>`
   display: grid;
   grid-template-columns: repeat(${props => props.size}, 1fr);
   grid-gap: ${props => 20 * 4 / props.size}px;
-  color: aliceblue;
 }
 
 .cell {
@@ -73,9 +72,24 @@ export const Wrapper = styled.div<Props>`
 }
 
 .footer{
+  margin-top: 20px;
   display: flex;
+  column-gap: 100px;
   justify-content: space-between;
+  grid-gap: ${props => 20 * 4 / props.size}px;
+}
+
+.footer div{
+  display: flex;
+  justify-content: center;
+  background-color: #1f3540;
+  width: 30%;
   color: #a8bec9;
+  font-size:20px ;
+  font-weight:500 ;
+  border-radius: 5px;
+  padding: 10px;
+  column-gap: 10px;
 }
 
 `;
