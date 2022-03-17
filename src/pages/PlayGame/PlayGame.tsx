@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./PlayGame.css";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
@@ -25,10 +25,10 @@ function PlayGame() {
     socket.on("game:updated", (roomId, room) => {
       dispatch(setRoom({ ...room, id: roomId }));
     });
-    socket.on("game:end", () => {
+    socket.on("game:wait", () => {
       dispatch(setStatus("waiting"));
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!room.id) {
@@ -98,7 +98,7 @@ function PlayGame() {
             </span>
           </div>
           <div>
-            <span>Yuo: </span>
+            <span>God: </span>
             <span
               style={
                 symbol === "X" ? { color: "#f2b237" } : { color: "#30c3be" }

@@ -61,7 +61,7 @@ export const Wrapper = styled.div<Props>`
   background-color: #1f3540;
   border-radius: 5px;
   padding: 10px;
-  font-size: 50px;
+  font-size: ${props => 3 / props.size * 50}px;
   font-weight: 700;
   aspect-ratio: 1;
   cursor: ${props => props.isTurn ? 'pointer' : 'default'};
