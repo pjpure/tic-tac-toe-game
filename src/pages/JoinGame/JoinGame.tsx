@@ -1,23 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import socket from "../../services/SocketService";
 import "./JoinGame.css";
+import BackButton from "../../components/BackButton/BackButton";
+import { useAppSelector, useAppDispatch } from "../../hooks/useRedux";
+import { setRoom } from "../../store/slices/RoomSlice";
 
 function JoinGame() {
   const [roomId, setRoomId] = useState("");
   const navigate = useNavigate();
+  const player = useAppSelector((state) => state.player);
+
+  const dispatch = useAppDispatch();
 
   const handleRoomIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRoomId(event.target.value);
   };
 
   const handleJoinGame = () => {
-    navigate(`/play`);
+    socket.emit("room:join", { playerName: player.name, roomId });
+    socket.on("room:joined", (roomId, room) => {
+      dispatch(setRoom({ ...room, id: roomId }));
+      navigate(`/game`);
+    });
+    socket.on("room:notFound", () => {
+      alert("Room not found");
+    });
+
+    socket.on("room:full", () => {
+      alert("Room is full");
+    });
+  };
+
+  const handleBackClick = () => {
+    navigate("/");
   };
 
   return (
     <div className="join-game">
-      <h2>Enter Room ID to Join the Game</h2>
+      <BackButton handleBackClick={handleBackClick} />
+      <h1>Enter Room ID to Join the Game</h1>
       <input
         type="text"
         placeholder="Enter Room ID"
@@ -26,7 +48,6 @@ function JoinGame() {
       />
       <div className="join-game-btn">
         <button onClick={handleJoinGame}>Join</button>
-        <button>Cancel</button>
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.wait-player {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.227);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  height: 30%;
+  width: 100%;
+  background-color: #1f3540;
+  margin-bottom: 5%;
+}
+
+.content h1 {
+  color: #30c4be;
+}
+
+.content h2 {
+  color: #a7bdc8;
+}
