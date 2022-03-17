@@ -2,3 +2,35 @@
   color: #a8bec9;
   text-align: center;
 }
+
+.create-game p {
+  font-size: 20pt;
+  font-weight: 500;
+  line-height: 0;
+}
+
+.create-game select {
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #a8bec9;
+  padding: 5px;
+  font-size: 14pt;
+  font-weight: 500;
+  background-color: #d9e0e4;
+}
+
+.create-game button {
+  margin-top: 20px;
+  width: 200px;
+  height: 30px;
+  color: #192a32;
+  cursor: pointer;
+  background-color: #d9e0e4;
+  border-radius: 3px;
+  border: 1px solid #a8bec9;
+}
+
+.create-game button:hover {
+  background-color: #a8bec9;
+}

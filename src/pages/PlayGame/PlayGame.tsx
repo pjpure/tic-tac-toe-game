@@ -9,28 +9,25 @@ import { Wrapper } from "./Board.styles";
 import { GrPowerReset } from "react-icons/gr";
 import WaitPlayer from "../../components/WaitPlayer/WaitPlayer";
 
-const createArray = (size: number) => {
-  const array = [];
-  for (let i = 0; i < size * size; i++) {
-    array.push("");
-  }
-  return array;
-};
-
 function PlayGame() {
   const room = useAppSelector((state) => state.room);
   const player = useAppSelector((state) => state.player);
-  const [board, setBoard] = useState<string[]>([]);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const [board, setBoard] = useState<string[]>([]);
   const [isTurn, setIsTurn] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [symbol, setSymbol] = useState("X");
 
   useEffect(() => {
-    setBoard(createArray(room.boardSize));
-  }, [room.boardSize]);
+    socket.on("game:start", ({ player, board }) => {
+      setBoard(board);
+      setIsStart(true);
+      setIsTurn(player.isTurn);
+      setSymbol(player.symbol);
+    });
+  }, []);
 
   useEffect(() => {
     if (!room.id) {
@@ -56,7 +53,7 @@ function PlayGame() {
     <div className="play-game">
       {!isStart && <WaitPlayer roomId={room.id} />}
       <BackButton handleBackClick={handleBackClick} />
-      <Wrapper size={room.boardSize} isTurn={isTurn}>
+      <Wrapper size={Math.sqrt(board.length)} isTurn={isTurn}>
         <div className="header">
           <div className="logo">
             <span style={{ color: "#30c3be" }}>X</span>

@@ -19,7 +19,7 @@ function CreateGame() {
   const handleCreateGame = () => {
     socket.emit("room:create", player.name, boardSize);
     socket.on("room:created", (roomId: string) => {
-      dispatch(setRoom({ id: roomId, boardSize }));
+      dispatch(setRoom({ id: roomId }));
       navigate("/game");
     });
   };
@@ -39,7 +39,7 @@ function CreateGame() {
   return (
     <div className="create-game">
       <BackButton handleBackClick={handleBackClick} />
-      <label>Choose a board size: </label>
+      <p>Choose a board size</p>
       <select
         name="board"
         id="board"

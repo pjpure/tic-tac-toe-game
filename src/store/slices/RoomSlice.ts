@@ -3,13 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Room = {
     id: string | null;
-    boardSize: number;
-
 }
 
 const initialState: Room = {
     id: null,
-    boardSize: 3,
 }
 
 const playerSlice = createSlice({
