@@ -27,6 +27,10 @@ function PlayGame() {
       setIsTurn(player.isTurn);
       setSymbol(player.symbol);
     });
+    socket.on("game:updated", ({ board, player }) => {
+      setBoard(board);
+      setIsTurn(player.isTurn);
+    });
   }, []);
 
   useEffect(() => {
@@ -35,11 +39,9 @@ function PlayGame() {
     }
   }, [room.id, navigate]);
 
-  const handleBoardClick = (index: number) => {
-    if (board[index] === "" && isTurn) {
-      const newBoards = [...board];
-      newBoards[index] = symbol;
-      setBoard(newBoards);
+  const handleBoardClick = (idx: number) => {
+    if (board[idx] === "" && isTurn) {
+      socket.emit("game:update", { roomId: room.id, idx });
     }
   };
 
