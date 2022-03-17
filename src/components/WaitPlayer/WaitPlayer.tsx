@@ -1,6 +1,6 @@
 import React from "react";
 import "./WaitPlayer.css";
-function WaitPlayer({ roomId }: { roomId: string | null }) {
+function WaitPlayer({ roomId }: { roomId: string }) {
   return (
     <div className="wait-player">
       <div className="content">

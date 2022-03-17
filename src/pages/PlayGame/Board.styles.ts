@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 interface Props {
   size: number
-  isTurn: boolean
+  isTurn?: boolean
 }
 
 export const Wrapper = styled.div<Props>`

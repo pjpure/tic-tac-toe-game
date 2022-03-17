@@ -4,37 +4,29 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
 import socket from "../../services/SocketService";
 import { useAppSelector, useAppDispatch } from "../../hooks/useRedux";
-import { leaveRoom } from "../../store/slices/RoomSlice";
+import { setRoom, setStatus, leaveRoom } from "../../store/slices/RoomSlice";
 import { Wrapper } from "./Board.styles";
 import { GrPowerReset } from "react-icons/gr";
 import WaitPlayer from "../../components/WaitPlayer/WaitPlayer";
+import useGame from "../../hooks/useGame";
 
 function PlayGame() {
   const room = useAppSelector((state) => state.room);
   const player = useAppSelector((state) => state.player);
+  const { board, status, isTurn, symbol } = useGame(socket.id);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [board, setBoard] = useState<string[]>(room.board);
-  const [isTurn, setIsTurn] = useState(false);
-  const [isPlay, setIsPlay] = useState(room.isPlay);
-  const [symbol, setSymbol] = useState("");
-
   useEffect(() => {
-    socket.on("game:start", (room) => {
-      let myData = room.players.find((p: any) => p.id === socket.id);
-      setBoard(room.board);
-      setIsPlay(true);
-      setIsTurn(myData.isTurn);
-      setSymbol(myData.symbol);
+    socket.on("game:start", (roomId, room) => {
+      dispatch(setRoom({ ...room, id: roomId }));
     });
-    socket.on("game:updated", ({ board, player }) => {
-      setBoard(board);
-      setIsPlay(true);
-      setIsTurn(player.isTurn);
+    socket.on("game:updated", (roomId, room) => {
+      dispatch(setRoom({ ...room, id: roomId }));
     });
     socket.on("game:end", () => {
-      setIsPlay(false);
+      dispatch(setStatus("waiting"));
     });
   }, []);
 
@@ -46,7 +38,6 @@ function PlayGame() {
 
   const handleBoardClick = (idx: number) => {
     if (board[idx] === "" && isTurn) {
-      setIsTurn(false);
       socket.emit("game:update", { roomId: room.id, idx });
     }
   };
@@ -59,7 +50,7 @@ function PlayGame() {
 
   return (
     <div className="play-game">
-      {!isPlay && <WaitPlayer roomId={room.id} />}
+      {status === "waiting" && room.id && <WaitPlayer roomId={room.id} />}
       <BackButton handleBackClick={handleBackClick} />
       <Wrapper size={Math.sqrt(board.length)} isTurn={isTurn}>
         <div className="header">

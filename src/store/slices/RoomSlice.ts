@@ -1,25 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Player {
-    id: string;
-    roomId: string;
-    name: string;
-    symbol: string;
-    isTurn: boolean;
+type Player = {
+    id?: string;
+    roomId?: string;
+    name?: string;
+    symbol?: string;
+    isTurn?: boolean;
 }
 
 type Room = {
-    id: string | null;
+    id?: string | null;
+    boardSize?: number;
     board: string[];
     players: Player[];
-    isPlay: boolean;
+    isPlay?: boolean;
+    status: "waiting" | "playing" | "ended";
 }
 
 const initialState: Room = {
-    id: null,
     isPlay: false,
     board: [],
     players: [],
+    status: "waiting"
 }
 
 const playerSlice = createSlice({
@@ -29,6 +31,9 @@ const playerSlice = createSlice({
         setRoom: (state, action: PayloadAction<Room>) => {
             return action.payload;
         },
+        setStatus: (state, action: PayloadAction<"waiting" | "playing" | "ended">) => {
+            state.status = action.payload;
+        },
         leaveRoom: (state) => {
             return initialState;
         }
@@ -36,6 +41,6 @@ const playerSlice = createSlice({
 
 })
 
-export const { setRoom, leaveRoom } = playerSlice.actions;
+export const { setRoom, leaveRoom, setStatus } = playerSlice.actions;
 
 export default playerSlice.reducer;
