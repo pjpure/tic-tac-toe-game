@@ -8,6 +8,7 @@ function useGame(id: string) {
     const [players, setPlayers] = useState(room.players)
     const [isTurn, setIsTurn] = useState(room.players.find(player => player.id === id)?.isTurn)
     const [symbol, setSymbol] = useState(room.players.find(player => player.id === id)?.symbol)
+    const [playerStatus, setPlayerStatus] = useState(room.players.find(player => player.id === id)?.status)
 
     useEffect(() => {
         setBoard(room.board)
@@ -15,8 +16,10 @@ function useGame(id: string) {
         setPlayers(room.players)
         setIsTurn(room.players.find(player => player.id === id)?.isTurn)
         setSymbol(room.players.find(player => player.id === id)?.symbol)
+        setPlayerStatus(room.players.find(player => player.id === id)?.status)
+
     }, [room, id])
-    return { board, status, players, isTurn, symbol }
+    return { board, status, players, isTurn, symbol, playerStatus }
 }
 
 export default useGame

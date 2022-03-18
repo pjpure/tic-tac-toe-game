@@ -6,14 +6,15 @@ import socket from "../../services/SocketService";
 import { useAppSelector, useAppDispatch } from "../../hooks/useRedux";
 import { setRoom, setStatus, leaveRoom } from "../../store/slices/RoomSlice";
 import { Wrapper } from "./Board.styles";
-import { GrPowerReset } from "react-icons/gr";
 import WaitPlayer from "../../components/WaitPlayer/WaitPlayer";
 import useGame from "../../hooks/useGame";
+import { BsFlagFill } from "react-icons/bs";
+import EndGame from "../../components/EndGame/EndGame";
 
 function PlayGame() {
   const room = useAppSelector((state) => state.room);
   const player = useAppSelector((state) => state.player);
-  const { board, status, isTurn, symbol } = useGame(socket.id);
+  const { board, status, isTurn, symbol, playerStatus } = useGame(socket.id);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -42,16 +43,35 @@ function PlayGame() {
     }
   };
 
-  const handleBackClick = () => {
-    socket.emit("room:leave", { playerName: player.name, roomId: room.id });
-    dispatch(leaveRoom());
-    navigate("/");
+  const handleLeaveRoom = () => {
+    if (window.confirm("Are you sure you want to leave the room?")) {
+      socket.emit("room:leave", { playerName: player.name, roomId: room.id });
+      dispatch(leaveRoom());
+      navigate("/");
+    }
+  };
+
+  const handleGiveUp = () => {
+    if (window.confirm("Are you sure you want to give up?")) {
+      socket.emit("game:giveUp", { roomId: room.id });
+    }
+  };
+
+  const handlePlayAgain = () => {
+    socket.emit("game:playAgain", { roomId: room.id });
   };
 
   return (
     <div className="play-game">
       {status === "waiting" && room.id && <WaitPlayer roomId={room.id} />}
-      <BackButton handleBackClick={handleBackClick} />
+      {status === "ended" && (
+        <EndGame
+          playerStatus={playerStatus}
+          handlePlayAgain={handlePlayAgain}
+          handleQuit={handleLeaveRoom}
+        />
+      )}
+      <BackButton handleBackClick={handleLeaveRoom} />
       <Wrapper size={Math.sqrt(board.length)} isTurn={isTurn}>
         <div className="header">
           <div className="logo">
@@ -64,8 +84,8 @@ function PlayGame() {
               : "O"}{" "}
             TURN
           </div>
-          <div className="reset">
-            <GrPowerReset />
+          <div className="give-up">
+            <BsFlagFill onClick={handleGiveUp} />
           </div>
         </div>
         <div className="board">
@@ -78,10 +98,22 @@ function PlayGame() {
                 className="cell"
                 key={index}
                 style={
-                  cell === "X" ? { color: "#30c3be" } : { color: "#f2b237" }
+                  cell === "X"
+                    ? { color: "#30c3be" }
+                    : cell === "O"
+                    ? { color: "#f2b237" }
+                    : cell === "WX"
+                    ? { backgroundColor: "#30c3be" }
+                    : cell === "WO"
+                    ? { backgroundColor: "#f2b237" }
+                    : {}
                 }
               >
-                {cell}
+                {cell === "X" || cell === "WX"
+                  ? "X"
+                  : cell === "O" || cell === "WO"
+                  ? "O"
+                  : ""}
               </div>
             );
           })}

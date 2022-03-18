@@ -6,6 +6,7 @@ type Player = {
     name?: string;
     symbol?: string;
     isTurn?: boolean;
+    status?: 'win' | 'lose' | 'draw' | '';
 }
 
 type Room = {
@@ -13,12 +14,10 @@ type Room = {
     boardSize?: number;
     board: string[];
     players: Player[];
-    isPlay?: boolean;
     status: "waiting" | "playing" | "ended";
 }
 
 const initialState: Room = {
-    isPlay: false,
     board: [],
     players: [],
     status: "waiting"

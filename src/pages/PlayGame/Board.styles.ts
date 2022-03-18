@@ -34,12 +34,12 @@ export const Wrapper = styled.div<Props>`
   width: 100px;
   }
 
-  .reset{
+  .give-up{
   display: flex;
   justify-content: center;
   align-items: start;
-  background-color: #a8bec9;
-  color:#1f3540;
+  background-color: #df7770;
+  color:#fff;
   font-size:30px ;
   border-radius: 5px;
   padding:10px ;

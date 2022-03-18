@@ -1,0 +1,64 @@
+.end-game {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.227);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  height: 30%;
+  width: 100%;
+  background-color: #1f3540;
+  margin-bottom: 5%;
+}
+
+.content h1 {
+  color: #30c4be;
+}
+
+.btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 14px;
+}
+
+#play-btn {
+  color: #192a32;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #192a32;
+  padding: 5px 10px;
+  background-color: #f2b237;
+  color: #192a32;
+}
+
+#quit-btn {
+  color: #192a32;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #192a32;
+  padding: 5px 10px;
+  background-color: #a8bec9;
+  color: #192a32;
+}
+
+#play-btn:hover {
+  background-color: #d9e0e4;
+}
+
+#quit-btn:hover {
+  background-color: #d9e0e4;
+}
